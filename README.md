@@ -1,0 +1,2 @@
+# craift
+AI Treasure Generator
