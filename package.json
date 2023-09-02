@@ -2,7 +2,7 @@
   "name": "craift",
   "version": "0.0.0",
   "description": "AI Treasure Generator",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/NBS-LLC/craift/issues"
   },
-  "homepage": "https://github.com/NBS-LLC/craift#readme"
+  "homepage": "https://github.com/NBS-LLC/craift#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
 }
