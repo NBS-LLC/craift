@@ -1,0 +1,19 @@
+{
+  "name": "craift",
+  "version": "1.0.0",
+  "description": "AI Treasure Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NBS-LLC/craift.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NBS-LLC/craift/issues"
+  },
+  "homepage": "https://github.com/NBS-LLC/craift#readme"
+}
