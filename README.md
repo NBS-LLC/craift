@@ -9,3 +9,8 @@ AI Treasure Generator
 nvm use
 npm install
 ```
+
+# building
+```
+npm build
+```

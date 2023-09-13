@@ -4,17 +4,12 @@
   "description": "AI Treasure Generator",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NBS-LLC/craift.git"
-  },
-  "author": "",
+  "author": "NBS LLC",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NBS-LLC/craift/issues"
-  },
   "homepage": "https://github.com/NBS-LLC/craift#readme",
   "devDependencies": {
     "ts-node": "^10.9.1",
