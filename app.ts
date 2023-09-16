@@ -1,5 +1,5 @@
 import express from "express";
-import treasureRouter from "./api/treasure/router";
+import treasureRouter from "./api/treasures/router";
 
 const app = express();
 app.use(express.json());
