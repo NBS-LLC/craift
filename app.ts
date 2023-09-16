@@ -1,10 +1,9 @@
 import express from "express";
-const app = express();
+import treasureRoute from "./api/treasure/treasure-route";
 
+const app = express();
 app.use(express.json());
 
-app.get("/", function (_req, res) {
-  res.json({ message: "crAIft" });
-});
+app.use("/api/treasure", treasureRoute);
 
 app.listen(3000);
