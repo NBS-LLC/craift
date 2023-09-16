@@ -1,16 +1,31 @@
-# crAIft
-AI Treasure Generator
+# The crAIft API
+
+AI Treasure Generator API
 
 # prerequisites
+
 [nvm](https://github.com/nvm-sh/nvm)
 
-# installation
+# installing
+
 ```
 nvm use
 npm install
 ```
 
 # building
+
 ```
-npm build
+npm run build
+```
+
+# developing
+
+Use the following commands during development.
+
+Changes will be applied automatically.
+
+```
+npm run watch
+npm run start:dev
 ```
