@@ -9,5 +9,6 @@ describe("GET /api/treasures/random", function () {
       .set("Accept", "application/json");
 
     expect(response.status).toBe(200);
+    // TODO: validate response schema matches Treasure schema
   });
 });
