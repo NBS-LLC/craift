@@ -4,8 +4,7 @@ export class Treasure {
   readonly name: string;
   readonly description: string;
   readonly value: number;
-
-  private attributes: TreasureAttribute[];
+  readonly attributes: TreasureAttribute[];
 
   constructor(name: string, description: string, value: number) {
     this.name = name;
@@ -16,9 +15,5 @@ export class Treasure {
 
   addAttribute(attribute: TreasureAttribute) {
     this.attributes.push(attribute);
-  }
-
-  getAttributes(): TreasureAttribute[] {
-    return this.attributes;
   }
 }
