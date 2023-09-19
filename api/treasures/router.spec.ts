@@ -1,3 +1,4 @@
+import chai, { assert } from "chai";
 import expect from "expect";
 import { resolve } from "node:path";
 import request from "supertest";
@@ -20,6 +21,7 @@ describe("GET /api/treasures/random", function () {
       Treasure.name
     );
 
-    console.dir(schema, { depth: Infinity });
+    chai.use(require("chai-json-schema"));
+    assert.jsonSchema(response.body, schema);
   });
 });
