@@ -4,20 +4,32 @@
   "description": "AI Treasure Generator",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start:dev": "nodemon dist/index.js",
+    "test": "mocha -r ts-node/register api/**/*.spec.ts",
+    "clean": "rm -rf dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NBS-LLC/craift.git"
-  },
-  "author": "",
+  "author": "NBS LLC",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NBS-LLC/craift/issues"
-  },
   "homepage": "https://github.com/NBS-LLC/craift#readme",
   "devDependencies": {
+    "@types/chai": "^4.3.6",
+    "@types/chai-json-schema": "^1.4.7",
+    "@types/express": "^4.17.17",
+    "@types/mocha": "^10.0.1",
+    "@types/supertest": "^2.0.12",
+    "chai": "^4.3.8",
+    "chai-json-schema": "^1.5.1",
+    "expect": "^29.7.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "typescript-json-schema": "^0.61.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }
