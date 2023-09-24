@@ -29,15 +29,13 @@ A Google Cloud account must be active:
 > gcloud auth application-default login
 ```
 
-The following environment variables must be configured:
+In addition to these environment variables:
 
 - CRAIFT_AI_PROJECT_ID - The id of a Google Cloud project with Vertex AI enabled
 
 # developing
 
-Use the following commands during development.
-
-Changes will be applied automatically.
+Changes can be applied in real-time:
 
 ```
 npm run watch
@@ -46,15 +44,9 @@ npm run start:dev
 
 # testing
 
-The server doesn't need to be running in order to execute the automated tests.
-
-Note: tests will still execute correctly even if the server is running.
+No need to build or run a server:
 
 ```
-npm run build
-# or
-npm run watch
-
 npm run test
 ```
 
