@@ -2,13 +2,20 @@ import { PredictionServiceClient } from "@google-cloud/aiplatform";
 import { Treasure } from "./treasure";
 import { TreasureGenerator } from "./treasure-generator";
 
-export async function getRandomTreasure(): Promise<Treasure> {
-  const predictionService = new PredictionServiceClient({
-    apiEndpoint: "us-central1-aiplatform.googleapis.com",
-  });
+export class TreasureController {
+  static create() {
+    // TODO: Use dependency injection
 
-  // TODO: Use dependency injection to allow for mocking
+    const predictionService = new PredictionServiceClient({
+      apiEndpoint: "us-central1-aiplatform.googleapis.com",
+    });
+    const treasureGenerator = new TreasureGenerator(predictionService);
+    return new TreasureController(treasureGenerator);
+  }
 
-  const treasureGenerator = new TreasureGenerator(predictionService);
-  return await treasureGenerator.generateRandomTreasure();
+  constructor(private treasureGenerator: TreasureGenerator) {}
+
+  async getRandomTreasure(): Promise<Treasure> {
+    return await this.treasureGenerator.generateRandomTreasure();
+  }
 }
