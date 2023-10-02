@@ -2,6 +2,14 @@ import { PredictionServiceClient, helpers } from "@google-cloud/aiplatform";
 import { Treasure } from "./treasure";
 
 export class TreasureGenerator {
+  static create() {
+    const predictionService = new PredictionServiceClient({
+      apiEndpoint: "us-central1-aiplatform.googleapis.com",
+    });
+
+    return new TreasureGenerator(predictionService);
+  }
+
   constructor(private predictionService: PredictionServiceClient) {}
 
   async generateRandomTreasure(): Promise<Treasure> {
