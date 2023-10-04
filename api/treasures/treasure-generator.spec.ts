@@ -1,7 +1,8 @@
-import { PredictionServiceClient } from "@google-cloud/aiplatform";
+import { PredictionServiceClient, helpers } from "@google-cloud/aiplatform";
 import { assert } from "chai";
 import { describe } from "mocha";
-import { capture, instance, mock } from "ts-mockito";
+import { anything, capture, instance, mock, when } from "ts-mockito";
+import { Treasure } from "./treasure";
 import { TreasureGenerator } from "./treasure-generator";
 
 describe(TreasureGenerator.name, function () {
@@ -44,5 +45,35 @@ describe(TreasureGenerator.name, function () {
         );
       });
     });
+
+    it("should transform predictions into treasure objects", async function () {
+      const treasure = new Treasure(
+        "treasure name",
+        "treasure description",
+        100
+      );
+      treasure.addAttribute({ name: "damage", value: 10 });
+
+      const mockService = mock(PredictionServiceClient);
+      when(mockService.predict(anything())).thenResolve([
+        mockPredictResponse(treasure),
+        undefined,
+        undefined,
+      ]);
+
+      const treasureGenerator = new TreasureGenerator(instance(mockService));
+      const actualTreasure = await treasureGenerator.generateRandomTreasure();
+      assert.deepEqual(actualTreasure, treasure);
+    });
   });
 });
+
+function mockPredictResponse(treasure: Treasure) {
+  const prediction = {
+    content: JSON.stringify(treasure),
+  };
+
+  return {
+    predictions: [helpers.toValue(prediction)!],
+  };
+}
