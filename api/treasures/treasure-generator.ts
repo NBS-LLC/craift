@@ -17,7 +17,7 @@ export class TreasureGenerator {
       this.predictionRequest
     );
 
-    if (!response.predictions) {
+    if (!response.predictions || response.predictions.length === 0) {
       throw new Error("Failed to generate treasure.");
     }
 
