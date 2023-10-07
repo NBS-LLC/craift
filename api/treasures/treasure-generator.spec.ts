@@ -71,11 +71,11 @@ describe(TreasureGenerator.name, function () {
       assert.deepEqual(actualTreasure, treasure);
     });
 
-    it("should handle predictions that don't conform to the treasure schema (invalid type)", function () {
+    it("should throw schema error on invalid property type", function () {
       const invalidTreasureData = {
         name: "treasure name",
         description: "treasure description",
-        value: "100 Gold", // Invalid type, should be a number.
+        value: "100 Gold", // Invalid property type, should be a number
         attributes: [],
       };
 
@@ -94,7 +94,7 @@ describe(TreasureGenerator.name, function () {
       );
     });
 
-    it("should handle predictions that don't conform to the treasure schema (missing property)", function () {
+    it("should throw schema error on missing property", function () {
       const invalidTreasureData = {
         name: "treasure name",
         description: "treasure description",

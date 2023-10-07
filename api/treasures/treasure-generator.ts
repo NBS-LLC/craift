@@ -1,6 +1,9 @@
 import { PredictionServiceClient, helpers } from "@google-cloud/aiplatform";
+import Ajv from "ajv";
 import { Treasure } from "./treasure";
+import treasureSchema from "./treasure.schema.json";
 
+export class TreasurePredictionError extends Error {}
 export class TreasurePredictionSchemaError extends Error {}
 
 export class TreasureGenerator {
@@ -20,7 +23,7 @@ export class TreasureGenerator {
     );
 
     if (!response.predictions || response.predictions.length === 0) {
-      throw new Error("Failed to generate treasure.");
+      throw new TreasurePredictionError("Failed to generate treasure.");
     }
 
     const prediction = response.predictions[0];
@@ -28,17 +31,15 @@ export class TreasureGenerator {
       prediction.structValue!.fields!.content!.stringValue!
     );
 
-    // TODO: Validate prediction data structure
-    if (!("attributes" in json)) {
+    const ajv = new Ajv();
+    const validate = ajv.compile<Treasure>(treasureSchema);
+    const isValid = validate(json);
+
+    if (!isValid) {
       throw new TreasurePredictionSchemaError("Invalid treasure schema.");
     }
 
-    const treasure = new Treasure(json.name, json.description, json.value);
-    for (const attribute of json.attributes) {
-      treasure.addAttribute({ name: attribute.name, value: attribute.value });
-    }
-
-    return treasure;
+    return json;
   }
 
   private get predictionRequest() {
