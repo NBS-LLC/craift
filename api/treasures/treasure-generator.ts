@@ -1,6 +1,8 @@
 import { PredictionServiceClient, helpers } from "@google-cloud/aiplatform";
 import { Treasure } from "./treasure";
 
+export class TreasurePredictionSchemaError extends Error {}
+
 export class TreasureGenerator {
   static create() {
     const predictionService = new PredictionServiceClient({
@@ -27,6 +29,9 @@ export class TreasureGenerator {
     );
 
     // TODO: Validate prediction data structure
+    if (!("attributes" in json)) {
+      throw new TreasurePredictionSchemaError("Invalid treasure schema.");
+    }
 
     const treasure = new Treasure(json.name, json.description, json.value);
     for (const attribute of json.attributes) {

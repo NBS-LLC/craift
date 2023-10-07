@@ -1,9 +1,14 @@
 import { PredictionServiceClient, helpers } from "@google-cloud/aiplatform";
-import { assert } from "chai";
+import chai, { assert } from "chai";
 import { describe } from "mocha";
 import { anything, capture, instance, mock, when } from "ts-mockito";
 import { Treasure } from "./treasure";
-import { TreasureGenerator } from "./treasure-generator";
+import {
+  TreasureGenerator,
+  TreasurePredictionSchemaError,
+} from "./treasure-generator";
+
+chai.use(require("chai-as-promised"));
 
 describe(TreasureGenerator.name, function () {
   describe("generateRandomTreasure()", function () {
@@ -65,10 +70,56 @@ describe(TreasureGenerator.name, function () {
       const actualTreasure = await treasureGenerator.generateRandomTreasure();
       assert.deepEqual(actualTreasure, treasure);
     });
+
+    it("should handle predictions that don't conform to the treasure schema (invalid type)", function () {
+      const invalidTreasureData = {
+        name: "treasure name",
+        description: "treasure description",
+        value: "100 Gold", // Invalid type, should be a number.
+        attributes: [],
+      };
+
+      const mockService = mock(PredictionServiceClient);
+      when(mockService.predict(anything())).thenResolve([
+        mockPredictResponse(invalidTreasureData),
+        undefined,
+        undefined,
+      ]);
+
+      const treasureGenerator = new TreasureGenerator(instance(mockService));
+
+      return assert.isRejected(
+        treasureGenerator.generateRandomTreasure(),
+        TreasurePredictionSchemaError
+      );
+    });
+
+    it("should handle predictions that don't conform to the treasure schema (missing property)", function () {
+      const invalidTreasureData = {
+        name: "treasure name",
+        description: "treasure description",
+        value: 100,
+        // Missing the "attributes" property
+      };
+
+      const mockService = mock(PredictionServiceClient);
+      when(mockService.predict(anything())).thenResolve([
+        mockPredictResponse(invalidTreasureData),
+        undefined,
+        undefined,
+      ]);
+
+      const treasureGenerator = new TreasureGenerator(instance(mockService));
+
+      return assert.isRejected(
+        treasureGenerator.generateRandomTreasure(),
+        TreasurePredictionSchemaError
+      );
+    });
   });
 });
 
-function mockPredictResponse(treasure: Treasure) {
+function mockPredictResponse(treasure: any) {
   const prediction = {
     content: JSON.stringify(treasure),
   };
